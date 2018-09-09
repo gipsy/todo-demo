@@ -1,20 +1,21 @@
-import React from 'react';
+import React from 'react'
+import { Icon } from 'antd'
 
-export default function Task({
-  task: { id, title, state },
-  onArchiveTask,
-  onPinTask,
+function Task({
+  task: { id, title, description, state },
+  doArchiveTask,
+  doPinTask,
 }) {
   return (
     <div className={`list-item ${state}`}>
       <label className="checkbox">
         <input
           type="checkbox"
-          defaultChecked={state === 'TASK_ARCHIVED'}
+          defaultChecked={state === 'archived'}
           disabled={true}
           name="checked"
         />
-        <span className="checkbox-custom" onClick={() => onArchiveTask(id)} />
+        <span className="checkbox-custom" onClick={() => doArchiveTask(id)} />
       </label>
       <div className="title">
         <input
@@ -24,14 +25,15 @@ export default function Task({
           placeholder="Input title"
         />
       </div>
-
       <div className="actions" onClick={(event) => event.stopPropagation()}>
-        {state !== 'TASK_ARCHIVED' && (
-          <a onClick={() => onPinTask(id)}>
+        {state !== 'archived' && (
+          <a onClick={() => doPinTask(id)}>
             <span className={'icon-star'} />
           </a>
         )}
       </div>
     </div>
-  );
+  )
 }
+
+export default Task

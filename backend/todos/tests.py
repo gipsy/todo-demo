@@ -8,6 +8,7 @@ class TodoModelTest(TestCase):
     def setUpTestData(cls):
         Todo.objects.create(title='first todo')
         Todo.objects.create(description='a description here')
+        Todo.objects.create(state='active')
 
     def test_title_content(self):
         todo = Todo.objects.get(id=1)
@@ -18,3 +19,8 @@ class TodoModelTest(TestCase):
         todo = Todo.objects.get(id=2)
         expected_object_name = f'{todo.description}'
         self.assertEquals(expected_object_name, 'a description here')
+
+    def test_state_content(self):
+        todo = Todo.objects.get(id=3)
+        expected_object_name = f'{todo.state}'
+        self.assertEquals(expected_object_name, 'active')

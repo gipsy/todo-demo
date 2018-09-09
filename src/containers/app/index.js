@@ -6,6 +6,7 @@ import { connect } from 'redux-bundler-react';
 import Home from '@screens/home';
 import SignIn from '@screens/sign-in';
 import Private from '@screens/private';
+import TaskListPage from '@screens/task-list';
 
 const AppRoot = ({ signedIn, signedInPending }) => {
   const requireAuth = (Component) => (signedIn ? Component : SignIn);
@@ -18,6 +19,7 @@ const AppRoot = ({ signedIn, signedInPending }) => {
         <Route path="/" exact component={Home} />
         <Route path="/private" component={requireAuth(Private)} />
         <Route path="/sign-in" component={SignIn} />
+        <Route path="/tasks" component={TaskListPage} />
       </>
     </Router>
   );
