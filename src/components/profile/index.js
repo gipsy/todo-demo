@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'redux-bundler-react';
 
-const Profile = ({ user, doSignOut, doSignIn }) => {
+function Profile({ user, doSignOut, doSignIn }) {
   if (user) {
     return (
       <>
@@ -29,4 +29,9 @@ const Profile = ({ user, doSignOut, doSignIn }) => {
   );
 };
 
-export default connect('selectUser', 'doSignOut', 'doSignIn', Profile);
+export default connect(
+  'selectUser',
+  'doSignOut',
+  'doSignIn',
+  Profile,
+);

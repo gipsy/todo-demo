@@ -1,0 +1,10 @@
+{
+  "name": "StartupRig",
+  "start_url": "http://startuprig.com",
+  "description": "Sandbox app",
+  "icons": [{
+    "src": "http://startuprig.com/logo.png",
+    "sizes": "400x400",
+    "type": "image/png"
+  }]
+}

@@ -9,4 +9,7 @@ const SignIn = ({ doSignIn }) => (
     </div>
   </div>
 );
-export default connect('doSignIn', SignIn);
+export default connect(
+  'doSignIn',
+  SignIn,
+);

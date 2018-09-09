@@ -24,5 +24,9 @@ const AppRoot = ({ signedIn, signedInPending }) => {
 };
 
 export default hot(module)(
-  connect('selectSignedIn', 'selectSignedInPending', AppRoot),
+  connect(
+    'selectSignedIn',
+    'selectSignedInPending',
+    AppRoot,
+  ),
 );
