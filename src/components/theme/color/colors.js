@@ -1,4 +1,4 @@
-import colorPalette from './colorPalete';
+import colorPalette from './color-palette';
 
 export const blue1 = colorPalette(blue6, 1);
 export const blue2 = colorPalette(blue6, 2);

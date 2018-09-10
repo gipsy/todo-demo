@@ -28,7 +28,7 @@ function Task({
       <div className="actions" onClick={(event) => event.stopPropagation()}>
         {state !== 'archived' && (
           <a onClick={() => doPinTask(id)}>
-            <span className={'icon-star'} />
+            <Icon type="star" theme="filled" />
           </a>
         )}
       </div>

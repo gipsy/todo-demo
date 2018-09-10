@@ -20,14 +20,12 @@
     "dev": "webpack-dev-server --mode development --hot",
     "format": "prettier --write \"src/**/*.js\" && echo -e '\\033[0;32m'💅 Just use prettier'\\033[0m'",
     "lint": "eslint src",
-    "publish-gh-pages": "npm run build-storybook && cd storybook-static && git init && git commit --allow-empty -m 'Update' && git checkout -b gh-pages && git add . && git commit -am 'Update' && git push git@github.com:yesmeck/styled-antd gh-pages --force",
+    "publish-gh-pages": "npm run build-storybook && cd storybook-static && git init && git commit --allow-empty -m 'Update' && git checkout -b gh-pages && git add . && git commit -am 'Update' && git push git@github.com:gipsy/todo-demo gh-pages --force",
     "start": "serve --single --cors dist",
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "antd": "^3.9.1",
-    "bitcoinjs-lib": "^4.0.1",
-    "blockstack": "^18.0.4",
     "money-clip": "^2.1.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",

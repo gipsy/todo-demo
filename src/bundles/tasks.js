@@ -35,7 +35,96 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: Object.keys(payload).map(key => (payload[key]))
+          // data: Object.keys(payload).map(key => (payload[key])) || null
+          data: payload
+        })
+      }
+
+      if (type === 'FETCH_ACTIVE_TASKS_START') {
+        return Object.assign({}, state, {
+          loading: true
+        })
+      }
+
+      if (type === 'FETCH_ACTIVE_TASKS_ERROR') {
+        return Object.assign({}, state, {
+          lastError: Date.now(),
+          loading: false
+        })
+      }
+
+      if (type === 'FETCH_ACTIVE_TASKS_SUCCESS') {
+        return Object.assign({}, state, {
+          lastFetch: Date.now(),
+          loading: false,
+          lastError: null,
+          data: payload.filter(task => task.state === 'active')
+        })
+      }
+
+      if (type === 'FETCH_ARCHIVED_TASKS_START') {
+        return Object.assign({}, state, {
+          loading: true
+        })
+      }
+
+      if (type === 'FETCH_ARCHIVED_TASKS_ERROR') {
+        return Object.assign({}, state, {
+          lastError: Date.now(),
+          loading: false
+        })
+      }
+
+      if (type === 'FETCH_ARCHIVED_TASKS_SUCCESS') {
+        return Object.assign({}, state, {
+          lastFetch: Date.now(),
+          loading: false,
+          lastError: null,
+          data: payload.filter(task => task.state === 'archived')
+        })
+      }
+
+      if (type === 'PIN_TASK_START') {
+        return Object.assign({}, state, {
+          loading: true
+        })
+      }
+
+      if (type === 'PIN_TASK_ERROR') {
+        return Object.assign({}, state, {
+          lastError: Date.now(),
+          loading: false,
+        })
+      }
+
+      if (type === 'PIN_TASK_SUCCESS') {
+        return Object.assign({}, state, {
+          lastFetch: Date.now(),
+          loading: false,
+          lastError: null,
+          // data: payload.filter(task => task.state === 'archived') || null
+        })
+      }
+
+      if (type === 'ARCHIVE_TASK_START') {
+        return Object.assign({}, state, {
+          loading: true
+        })
+      }
+
+      if (type === 'ARCHIVE_TASK_ERROR') {
+        return Object.assign({}, state, {
+          lastError: Date.now(),
+          loading: false,
+        })
+      }
+
+      if (type === 'ARCHIVE_TASK_SUCCESS') {
+        return Object.assign({}, state, {
+          lastFetch: Date.now(),
+          loading: false,
+          lastError: null,
+          // data: payload.filter(task => task.state === 'archived') || null
         })
       }
 
@@ -50,10 +139,35 @@ export default {
     dispatch({type: 'FETCH_TASKS_START'})
     apiRead('/tasks')
       .then(payload => {
-        dispatch({type: 'FETCH_TASKS_SUCCESS', payload})
+        dispatch({type: 'FETCH_TASKS_SUCCESS', 
+        payload})
       })
       .catch(err => {
         dispatch({type: 'FETCH_TASKS_ERROR', err})
+      })
+  },
+
+  doFetchActiveTasks: () => ({ dispatch, apiRead }) => {
+    dispatch({type: 'FETCH_ACTIVE_TASKS_START'})
+    apiRead('/tasks')
+      .then(payload => {
+        dispatch({type: 'FETCH_ACTIVE_TASKS_SUCCESS',
+        payload})
+      })
+      .catch(err => {
+        dispatch({type: 'FETCH_ACTIVE_TASKS_ERROR'})
+      })
+  },
+
+  doFetchArchivedTasks: () => ({ dispatch, apiRead }) => {
+    dispatch({type: 'FETCH_ARCHIVED_TASKS_START'})
+    apiRead('/tasks')
+      .then(payload => {
+        dispatch({type: 'FETCH_ARCHIVED_TASKS_SUCCESS',
+        payload})
+      })
+      .catch(err => {
+        dispatch({type: 'FETCH_ARCHIVED_TASKS_ERROR'})
       })
   },
   
@@ -81,7 +195,6 @@ export default {
 
   doAddTask: (data) => ({ dispatch, apiCreate }) => {
     dispatch({type: 'ADD_TASK_START'})
-    data = {'title': 'test', 'description': 'test', 'state': 'active'}
     apiCreate('/tasks/', data)
       .then(res => {
         dispatch({type: 'ADD_TASK_SUCCESS', res})
@@ -93,7 +206,7 @@ export default {
 
   doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
     dispatch({type: 'DELETE_TASK_START'})
-    apiDelete('/tasks', id)
+    apiDelete('/tasks/', id)
       .then(res => {
         dispatch({type: 'DELETE_TASK_SUCCESS', res})
       })
@@ -114,8 +227,6 @@ export default {
   selectTasksFetchStatus: createSelector(
     'selectTasksRaw',
     (tasks) => {
-      console.log('inside selectTasksFetchStatus')
-      console.log(tasks)
       const { data, lastError, lastFetch, loading } = tasks
 
       let result = ''
@@ -143,10 +254,12 @@ export default {
   selectTasksActive: createSelector(
     'selectTasks',
     (tasks) => {
+      console.log('inside selectTasksActive')
+      console.log(tasks)
       if (!tasks) {
         return null
       }
-      return tasks.find((task) => task.state === 'active') || null
+      return tasks.filter(task => task.state === 'active') || null
     }
   ),
 
@@ -156,9 +269,11 @@ export default {
       if (!tasks) {
         return null
       }
-      return tasks.find((task) => task.state === 'archived') || null
+      return tasks.filter(task => task.state === 'archived') || null
     }
   ),
+
+  selectTasksLoading: state => state.tasks.loading,
 
 
   // here's our first "reactor"

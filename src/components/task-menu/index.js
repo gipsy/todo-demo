@@ -1,53 +1,82 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'redux-bundler-react'
 import { Menu, Icon } from 'antd'
 
-function TaskMenu({
-  doAddTask,
-  tasksActive,
-  tasksArchived,
-}) {
-  console.log('show tasksArchived')
-  console.log(tasksArchived)
-  console.log('show tasksActive')
-  console.log(tasksActive)
+class TaskMenu extends Component {
+  constructor(props) {
+    super(props)
 
-  const handleSelect = (item) => {
-    switch (item.key) {
-      case 'todo':
-        return tasksActive
-      case 'done':
-        return tasksArchived
-      case 'add':
-        return doAddTask('test')
+    this.state = {
+      currentMenu: 'todo'
     }
   }
 
-  let {filter} = 'todo'
-  // let selectedKey = (filter === SHOW_TODO ? 'todo' : 'done')
-  let selectedKey = ('todo')
-  return (
-    <>
-      <Menu selectedKeys={[selectedKey]} mode="horizontal" onSelect={handleSelect}>
-        <Menu.Item key="todo">
-          <Icon type="tags" />Todo
-        </Menu.Item>
+  handleSelectMenu = (e) => {
+    switch (e.key) {
+      case 'todo':
+        return this.setState({currentMenu: e.key})
+      case 'done':
+        return this.setState({currentMenu: e.key})
+      case 'add':
+        return this.setState({currentMenu: e.key})
+    }
+  }
 
-        <Menu.Item key="done">
-          <Icon type="check" />Done
-        </Menu.Item>
+  handleUpdateTaskList = (e) => {
+    switch (e.key) {
+      case 'todo':
+        return this.props.doFetchActiveTasks()
+      case 'done':
+        return this.props.doFetchArchivedTasks()
+      case 'add':
+        this.props.doAddTask({'title': 'test', 'description': 'test', 'state': 'active'})
+        return this.props.doFetchTasks()
+    }
+  }
 
-        <Menu.Item key="add" onClick={() => 1}>
-          <Icon type="plus-circle-o" />Add
-        </Menu.Item>
-      </Menu>
-    </>
-  )
+  render() {
+
+    const {
+      currentMenu
+    } = this.state
+
+    return (
+      <>
+        <Menu 
+          selectedKeys={[currentMenu]} 
+          mode="horizontal" 
+          onClick={e => this.handleSelectMenu(e)}
+          onSelect={e => this.handleUpdateTaskList(e)}
+        >
+          <Menu.Item key="todo">
+            <Icon type="tags" />Todo
+          </Menu.Item>
+
+          <Menu.Item key="done">
+            <Icon type="check" />Done
+          </Menu.Item>
+
+          <Menu.Item key="add" onClick={() => 1}>
+            <Icon type="plus-circle-o" />Add
+          </Menu.Item>
+        </Menu>
+      </>
+    )
+  }
+}
+
+TaskMenu.propTypes = {
+  doAddTask: PropTypes.func.isRequired,
+  doFetchTasks: PropTypes.func.isRequired,
+  doFetchActiveTasks: PropTypes.func.isRequired,
+  doFetchArchivedTasks: PropTypes.func.isRequired,
 }
 
 export default connect(
   'doAddTask',
-  'selectTasksActive',
-  'selectTasksArchived',
+  'doFetchTasks',
+  'doFetchActiveTasks',
+  'doFetchArchivedTasks',
   TaskMenu
 )

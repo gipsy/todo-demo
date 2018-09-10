@@ -1,5 +1,5 @@
 import * as colors from './color/colors';
-import colorPalette from './color/colorPalete';
+import colorPalette from './color/color-palette';
 import { add } from '../style/mixins/font';
 import { fade } from '../style/mixins/color';
 
