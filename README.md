@@ -16,6 +16,11 @@ Running `yarn build` will bundle the application for use in production.
 
 Deploy easily with [now](https://now.sh) by running `now` or use another service like heroku/digital ocean.
 
+#### To run Django CRUD api server in `backend/` folder
+`python manage.py runserver`
+
+credentials for [http://127.0.0.1:8000/](http://127.0.0.1:8000/): admin/admin
+
 ## About the author
 
 [Taras Gavrysh](ter4444@gmail.com) is an independent designer and developer.
