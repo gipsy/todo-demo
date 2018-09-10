@@ -8,18 +8,18 @@ class TaskMenu extends Component {
     super(props)
 
     this.state = {
-      currentMenu: 'todo'
+      currentMenu: 'todo',
     }
   }
 
   handleSelectMenu = (e) => {
     switch (e.key) {
       case 'todo':
-        return this.setState({currentMenu: e.key})
+        return this.setState({ currentMenu: e.key })
       case 'done':
-        return this.setState({currentMenu: e.key})
+        return this.setState({ currentMenu: e.key })
       case 'add':
-        return this.setState({currentMenu: e.key})
+        return this.setState({ currentMenu: e.key })
     }
   }
 
@@ -30,35 +30,39 @@ class TaskMenu extends Component {
       case 'done':
         return this.props.doFetchArchivedTasks()
       case 'add':
-        this.props.doAddTask({'title': 'test', 'description': 'test', 'state': 'active'})
+        this.props.doAddTask({
+          title: 'test',
+          description: 'test',
+          state: 'active',
+        })
         return this.props.doFetchTasks()
     }
   }
 
   render() {
-
-    const {
-      currentMenu
-    } = this.state
+    const { currentMenu } = this.state
 
     return (
       <>
-        <Menu 
-          selectedKeys={[currentMenu]} 
-          mode="horizontal" 
-          onClick={e => this.handleSelectMenu(e)}
-          onSelect={e => this.handleUpdateTaskList(e)}
+        <Menu
+          selectedKeys={[currentMenu]}
+          mode="horizontal"
+          onClick={(e) => this.handleSelectMenu(e)}
+          onSelect={(e) => this.handleUpdateTaskList(e)}
         >
           <Menu.Item key="todo">
-            <Icon type="tags" />Todo
+            <Icon type="tags" />
+            Todo
           </Menu.Item>
 
           <Menu.Item key="done">
-            <Icon type="check" />Done
+            <Icon type="check" />
+            Done
           </Menu.Item>
 
           <Menu.Item key="add" onClick={() => 1}>
-            <Icon type="plus-circle-o" />Add
+            <Icon type="plus-circle-o" />
+            Add
           </Menu.Item>
         </Menu>
       </>
@@ -78,5 +82,5 @@ export default connect(
   'doFetchTasks',
   'doFetchActiveTasks',
   'doFetchArchivedTasks',
-  TaskMenu
+  TaskMenu,
 )

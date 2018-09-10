@@ -7,14 +7,14 @@ export default {
       loading: false,
       lastError: null,
       lastFetch: null,
-      data: null
+      data: null,
     }
 
     // this is just a normal redux reducer
-    return (state = initialState, {type, payload}) => {
+    return (state = initialState, { type, payload }) => {
       if (type === 'FETCH_TASKS_START') {
         return Object.assign({}, state, {
-          loading: true
+          loading: true,
         })
       }
 
@@ -24,7 +24,7 @@ export default {
       if (type === 'FETCH_TASKS_ERROR') {
         return Object.assign({}, state, {
           lastError: Date.now(),
-          loading: false
+          loading: false,
         })
       }
 
@@ -36,20 +36,20 @@ export default {
           loading: false,
           lastError: null,
           // data: Object.keys(payload).map(key => (payload[key])) || null
-          data: payload
+          data: payload,
         })
       }
 
       if (type === 'FETCH_ACTIVE_TASKS_START') {
         return Object.assign({}, state, {
-          loading: true
+          loading: true,
         })
       }
 
       if (type === 'FETCH_ACTIVE_TASKS_ERROR') {
         return Object.assign({}, state, {
           lastError: Date.now(),
-          loading: false
+          loading: false,
         })
       }
 
@@ -58,20 +58,20 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: payload.filter(task => task.state === 'active')
+          data: payload.filter((task) => task.state === 'active'),
         })
       }
 
       if (type === 'FETCH_ARCHIVED_TASKS_START') {
         return Object.assign({}, state, {
-          loading: true
+          loading: true,
         })
       }
 
       if (type === 'FETCH_ARCHIVED_TASKS_ERROR') {
         return Object.assign({}, state, {
           lastError: Date.now(),
-          loading: false
+          loading: false,
         })
       }
 
@@ -80,13 +80,13 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: payload.filter(task => task.state === 'archived')
+          data: payload.filter((task) => task.state === 'archived'),
         })
       }
 
       if (type === 'PIN_TASK_START') {
         return Object.assign({}, state, {
-          loading: true
+          loading: true,
         })
       }
 
@@ -108,7 +108,7 @@ export default {
 
       if (type === 'ARCHIVE_TASK_START') {
         return Object.assign({}, state, {
-          loading: true
+          loading: true,
         })
       }
 
@@ -132,149 +132,151 @@ export default {
     }
   },
 
-  // see /src/bundles/extra-args to see how 
+  // see /src/bundles/extra-args to see how
   // apiGet/apiUpdate/apiCreate becomes
   // available here
   doFetchTasks: () => ({ dispatch, apiRead }) => {
-    dispatch({type: 'FETCH_TASKS_START'})
+    dispatch({ type: 'FETCH_TASKS_START' })
     apiRead('/tasks')
-      .then(payload => {
-        dispatch({type: 'FETCH_TASKS_SUCCESS', 
-        payload})
+      .then((payload) => {
+        dispatch({
+          type: 'FETCH_TASKS_SUCCESS',
+          payload,
+        })
       })
-      .catch(err => {
-        dispatch({type: 'FETCH_TASKS_ERROR', err})
+      .catch((err) => {
+        dispatch({ type: 'FETCH_TASKS_ERROR', err })
       })
   },
 
   doFetchActiveTasks: () => ({ dispatch, apiRead }) => {
-    dispatch({type: 'FETCH_ACTIVE_TASKS_START'})
+    dispatch({ type: 'FETCH_ACTIVE_TASKS_START' })
     apiRead('/tasks')
-      .then(payload => {
-        dispatch({type: 'FETCH_ACTIVE_TASKS_SUCCESS',
-        payload})
+      .then((payload) => {
+        dispatch({
+          type: 'FETCH_ACTIVE_TASKS_SUCCESS',
+          payload,
+        })
       })
-      .catch(err => {
-        dispatch({type: 'FETCH_ACTIVE_TASKS_ERROR'})
+      .catch((err) => {
+        dispatch({ type: 'FETCH_ACTIVE_TASKS_ERROR' })
       })
   },
 
   doFetchArchivedTasks: () => ({ dispatch, apiRead }) => {
-    dispatch({type: 'FETCH_ARCHIVED_TASKS_START'})
+    dispatch({ type: 'FETCH_ARCHIVED_TASKS_START' })
     apiRead('/tasks')
-      .then(payload => {
-        dispatch({type: 'FETCH_ARCHIVED_TASKS_SUCCESS',
-        payload})
+      .then((payload) => {
+        dispatch({
+          type: 'FETCH_ARCHIVED_TASKS_SUCCESS',
+          payload,
+        })
       })
-      .catch(err => {
-        dispatch({type: 'FETCH_ARCHIVED_TASKS_ERROR'})
+      .catch((err) => {
+        dispatch({ type: 'FETCH_ARCHIVED_TASKS_ERROR' })
       })
   },
-  
+
   doArchiveTask: (id) => ({ dispatch, apiUpdate }) => {
-    dispatch({type: 'ARCHIVE_TASK_START'})
-    apiPut('/tasks', id, {'state': 'archived'})
-      .then(res => {
-        dispatch({type: 'ARCHIVE_TASK_SUCCESS', res})
+    dispatch({ type: 'ARCHIVE_TASK_START' })
+    apiPut('/tasks', id, { state: 'archived' })
+      .then((res) => {
+        dispatch({ type: 'ARCHIVE_TASK_SUCCESS', res })
       })
-      .catch(err => {
-        dispatch({type: 'ARCHIVE_TASK_ERROR', err})
+      .catch((err) => {
+        dispatch({ type: 'ARCHIVE_TASK_ERROR', err })
       })
   },
 
   doPinTask: (id) => ({ dispatch, apiUpdate }) => {
-    dispatch({type: 'PIN_TASK_START'})
-    apiPut('/tasks', id, {'state': 'pinned'})
-      .then(res => {
-        dispatch({type: 'PIN_TASK_SUCCESS', res})
+    dispatch({ type: 'PIN_TASK_START' })
+    apiPut('/tasks', id, { state: 'pinned' })
+      .then((res) => {
+        dispatch({ type: 'PIN_TASK_SUCCESS', res })
       })
-      .catch(err => {
-        dispatch({type: 'PIN_TASK_ERROR', err})
+      .catch((err) => {
+        dispatch({ type: 'PIN_TASK_ERROR', err })
       })
   },
 
   doAddTask: (data) => ({ dispatch, apiCreate }) => {
-    dispatch({type: 'ADD_TASK_START'})
+    dispatch({ type: 'ADD_TASK_START' })
     apiCreate('/tasks/', data)
-      .then(res => {
-        dispatch({type: 'ADD_TASK_SUCCESS', res})
+      .then((res) => {
+        dispatch({ type: 'ADD_TASK_SUCCESS', res })
       })
       .catch((err) => {
-        dispatch({type: 'ADD_TASK_ERROR', err})
+        dispatch({ type: 'ADD_TASK_ERROR', err })
       })
   },
 
   doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
-    dispatch({type: 'DELETE_TASK_START'})
+    dispatch({ type: 'DELETE_TASK_START' })
     apiDelete('/tasks/', id)
-      .then(res => {
-        dispatch({type: 'DELETE_TASK_SUCCESS', res})
+      .then((res) => {
+        dispatch({ type: 'DELETE_TASK_SUCCESS', res })
       })
-      .catch(err => {
-        dispatch({type: 'DELETE_TASK_ERROR'})
+      .catch((err) => {
+        dispatch({ type: 'DELETE_TASK_ERROR' })
       })
   },
 
   // selector for the whole contents of the reducer
   // including metadata about fetches
-  selectTasksRaw: state => state.tasks,
+  selectTasksRaw: (state) => state.tasks,
 
   // selector for just the actual data if we have it
-  selectTasks: state => state.tasks.data,
+  selectTasks: (state) => state.tasks.data,
 
   // we'll extract a status string here, for display, just to show
   // the type of information available about the data
-  selectTasksFetchStatus: createSelector(
-    'selectTasksRaw',
-    (tasks) => {
-      const { data, lastError, lastFetch, loading } = tasks
+  selectTasksFetchStatus: createSelector('selectTasksRaw', (tasks) => {
+    const { data, lastError, lastFetch, loading } = tasks
 
-      let result = ''
+    let result = ''
 
-      if (data) {
-        result += 'Has data'
-      } else {
-        result += 'Does not have data'
-      }
-
-      if (loading) {
-        return result + ' and is fetching currently'
-      }
-
-      if (lastError) {
-        return result + ` but had an error at ${lastError} and will retry after ~30 seconds`
-      }
-
-      if (lastFetch) {
-        return result + ` that was fetched at ${lastFetch} but will be updated a minute later`
-      }
+    if (data) {
+      result += 'Has data'
+    } else {
+      result += 'Does not have data'
     }
-  ),
 
-  selectTasksActive: createSelector(
-    'selectTasks',
-    (tasks) => {
-      console.log('inside selectTasksActive')
-      console.log(tasks)
-      if (!tasks) {
-        return null
-      }
-      return tasks.filter(task => task.state === 'active') || null
+    if (loading) {
+      return result + ' and is fetching currently'
     }
-  ),
 
-  selectTasksArchived: createSelector(
-    'selectTasks',
-    (tasks) => {
-      if (!tasks) {
-        return null
-      }
-      return tasks.filter(task => task.state === 'archived') || null
+    if (lastError) {
+      return (
+        result +
+        ` but had an error at ${lastError} and will retry after ~30 seconds`
+      )
     }
-  ),
 
-  selectTasksLoading: state => state.tasks.loading,
+    if (lastFetch) {
+      return (
+        result +
+        ` that was fetched at ${lastFetch} but will be updated a minute later`
+      )
+    }
+  }),
 
+  selectTasksActive: createSelector('selectTasks', (tasks) => {
+    console.log('inside selectTasksActive')
+    console.log(tasks)
+    if (!tasks) {
+      return null
+    }
+    return tasks.filter((task) => task.state === 'active') || null
+  }),
+
+  selectTasksArchived: createSelector('selectTasks', (tasks) => {
+    if (!tasks) {
+      return null
+    }
+    return tasks.filter((task) => task.state === 'archived') || null
+  }),
+
+  selectTasksLoading: (state) => state.tasks.loading,
 
   // here's our first "reactor"
   reactShouldFetchTasks: createSelector(
@@ -336,9 +338,9 @@ export default {
       // name of the action creator function we want to run, and optionally
       // any args we want to pass to it.
       if (shouldFetch) {
-        return {actionCreator: 'doFetchTasks'}
+        return { actionCreator: 'doFetchTasks' }
       }
-    }
+    },
   ),
-  persistActions: ['FETCH_TASKS_SUCCESS']
-};
+  persistActions: ['FETCH_TASKS_SUCCESS'],
+}

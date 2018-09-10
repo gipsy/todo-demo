@@ -10,5 +10,5 @@ const Root = (store) => (
       <App />
     </ThemeProvider>
   </Provider>
-);
+)
 export default Root

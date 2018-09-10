@@ -1,10 +1,10 @@
 import colorEasing from './bezier-easing'
 import tinycolor from './tiny-color'
 
-var warmDark = 0.5; // warm color darken radio
-var warmRotate = -26; // warm color rotate degree
-var coldDark = 0.55; // cold color darken radio
-var coldRotate = 10; // cold color rotate degree
+var warmDark = 0.5 // warm color darken radio
+var warmRotate = -26 // warm color rotate degree
+var coldDark = 0.55 // cold color darken radio
+var coldRotate = 10 // cold color rotate degree
 var getShadeColor = function(c) {
   var shadeColor = tinycolor(c)
   // warm and cold color will darken in different radio, and rotate in different degree
@@ -20,7 +20,7 @@ var getShadeColor = function(c) {
     .darken(shadeColor.toHsl().l * coldDark * 100)
     .spin(coldRotate)
     .toHexString()
-};
+}
 var primaryEasing = colorEasing(0.6)
 
 export default function(color, index) {

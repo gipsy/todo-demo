@@ -13,19 +13,12 @@ class TaskList extends Component {
   }
 
   render() {
-
-    const {
-      tasks,
-      tasksLoading,
-      doPinTask,
-      doArchiveTask
-    } = this.props
+    const { tasks, tasksLoading, doPinTask, doArchiveTask } = this.props
 
     const events = {
       doPinTask,
       doArchiveTask,
     }
-
 
     if (tasksLoading) {
       return (
@@ -47,7 +40,7 @@ class TaskList extends Component {
       <>
         <div className="list-items">
           {tasks.map((task) => (
-            <Task key={task.id} task={task} {...this.events} />
+            <Task key={task.id} task={task} {...events} />
           ))}
         </div>
       </>
@@ -63,12 +56,11 @@ TaskList.propTypes = {
   tasksLoading: PropTypes.bool,
 }
 
-
 export default connect(
   'doPinTask',
   'doArchiveTask',
   'doFetchTasks',
   'selectTasks',
   'selectTasksLoading',
-  TaskList
+  TaskList,
 )
