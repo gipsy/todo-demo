@@ -1,21 +1,33 @@
-import * as blockstack from 'blockstack';
+import * as blockstack from 'blockstack'
 
 export default {
   name: 'extra-args',
   getExtraArgs: (store) => {
     return {
       handleUserSignIn: (state) => {
-        const signedIn = blockstack.isUserSignedIn();
+        const signedIn = blockstack.isUserSignedIn()
         if (signedIn && state.auth && !state.auth.user) {
-          return blockstack.loadUserData();
+          return blockstack.loadUserData()
         } else if (blockstack.isSignInPending()) {
-          return blockstack.handlePendingSignIn().then((data) => data);
+          return blockstack.handlePendingSignIn().then((data) => data)
         } else {
-          return signedIn;
+          return signedIn
         }
       },
 
-      apiFetch: (urlPath) =>
+      apiCreate: (urlPath, data) =>
+        fetch(`http://127.0.0.1:8000/api${urlPath}`, {
+          credentials: 'same-origin',
+          method: 'POST', 
+          body: JSON.stringify(data),
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          })
+        })
+        .then(res => res.json())
+        .catch(err => { throw err }),
+
+      apiRead: (urlPath) =>
         // if your API requires an authentication token or whatnot
         // here would be a great place to select it from your store
         // and pass it along with the fetch. Then none of your individual
@@ -33,7 +45,27 @@ export default {
             // can call `store.doWhatever()`
             // but for our purposes we'll just throw here
             throw err
+          }),
+
+      apiUpdate: (urlPath, id, data) =>
+        fetch(`http://127.0.0.1:8000/api${urlPath}`, {
+          credentials: 'same-origin',
+          method: 'PUT',
+          body: JSON.stringify(data),
+          headers: new Headers({
+            'Content-Type': 'application/json'
           })
-    };
+        })
+        .then(res => res.json())
+        .catch(err => { throw err }),
+
+      apiDelete: (urlPath, id) =>
+        fetch(`http://127.0.0.1:8000/api${urlPath}`, {
+          credentials: 'same-origin',
+          method: 'DELETE',
+        })
+        .then(res => res.json())
+        .catch(err => { throw err })
+    }
   },
-};
+}

@@ -43,12 +43,13 @@ export default {
     }
   },
 
-  // see /src/bundles/extra-args to see how apiFetch becomes
+  // see /src/bundles/extra-args to see how 
+  // apiGet/apiUpdate/apiCreate becomes
   // available here
-  doFetchTasks: () => ({ dispatch, apiFetch }) => {
+  doFetchTasks: () => ({ dispatch, apiRead }) => {
     dispatch({type: 'FETCH_TASKS_START'})
-    apiFetch('/tasks')
-      .then((payload) => {
+    apiRead('/tasks')
+      .then(payload => {
         dispatch({type: 'FETCH_TASKS_SUCCESS', payload})
       })
       .catch(err => {
@@ -56,36 +57,48 @@ export default {
       })
   },
   
-  doArchiveTask: (id) => ({ dispatch, apiFetch }) => {
-    dispatch({type: 'DELETE_TASK_START'})
-    apiFetch('/tasks/:id?archive')
-      .then((res) => {
-        dispatch({type: 'DELETE_TASK_SUCCESS', res})
+  doArchiveTask: (id) => ({ dispatch, apiUpdate }) => {
+    dispatch({type: 'ARCHIVE_TASK_START'})
+    apiPut('/tasks', id, {'state': 'archived'})
+      .then(res => {
+        dispatch({type: 'ARCHIVE_TASK_SUCCESS', res})
       })
-      .catch(error => {
-        dispatch({type: 'DELETE_TASK_ERROR', error})
+      .catch(err => {
+        dispatch({type: 'ARCHIVE_TASK_ERROR', err})
       })
   },
 
-  doPinTask: (id) => ({ dispatch, apiFetch }) => {
+  doPinTask: (id) => ({ dispatch, apiUpdate }) => {
     dispatch({type: 'PIN_TASK_START'})
-    apiFetch('/tasks/:id?pin')
-      .then((res) => {
+    apiPut('/tasks', id, {'state': 'pinned'})
+      .then(res => {
         dispatch({type: 'PIN_TASK_SUCCESS', res})
       })
-      .catch((err) => {
-        dispatch({type: 'PIN_TASK_SUCCESS', err})
+      .catch(err => {
+        dispatch({type: 'PIN_TASK_ERROR', err})
       })
   },
 
-  doAddTask: () => ({ dispatch, apiFetch }) => {
+  doAddTask: (data) => ({ dispatch, apiCreate }) => {
     dispatch({type: 'ADD_TASK_START'})
-    apiFetch('/tasks/new')
-      .then((res) => {
+    data = {'title': 'test', 'description': 'test', 'state': 'active'}
+    apiCreate('/tasks/', data)
+      .then(res => {
         dispatch({type: 'ADD_TASK_SUCCESS', res})
       })
       .catch((err) => {
-        dispatch({type: 'ADD_TASK_SUCCESS', err})
+        dispatch({type: 'ADD_TASK_ERROR', err})
+      })
+  },
+
+  doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
+    dispatch({type: 'DELETE_TASK_START'})
+    apiDelete('/tasks', id)
+      .then(res => {
+        dispatch({type: 'DELETE_TASK_SUCCESS', res})
+      })
+      .catch(err => {
+        dispatch({type: 'DELETE_TASK_ERROR'})
       })
   },
 

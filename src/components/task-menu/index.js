@@ -19,7 +19,7 @@ function TaskMenu({
       case 'done':
         return tasksArchived
       case 'add':
-        return doAddTask()
+        return doAddTask('test')
     }
   }
 
