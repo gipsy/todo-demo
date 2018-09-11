@@ -4,6 +4,14 @@ import { connect } from 'redux-bundler-react'
 import Task from '@components/task'
 
 class TaskList extends Component {
+  static propTypes = {
+    doPinTask: PropTypes.func.isRequired,
+    doArchiveTask: PropTypes.func.isRequired,
+    doFetchTasks: PropTypes.func.isRequired,
+    tasks: PropTypes.array,
+    tasksLoading: PropTypes.bool,
+  }
+
   constructor(props) {
     super(props)
   }
@@ -46,14 +54,6 @@ class TaskList extends Component {
       </>
     )
   }
-}
-
-TaskList.propTypes = {
-  doPinTask: PropTypes.func.isRequired,
-  doArchiveTask: PropTypes.func.isRequired,
-  doFetchTasks: PropTypes.func.isRequired,
-  tasks: PropTypes.array,
-  tasksLoading: PropTypes.bool,
 }
 
 export default connect(

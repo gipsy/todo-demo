@@ -9,6 +9,7 @@ class TodoModelTest(TestCase):
         Todo.objects.create(title='first todo')
         Todo.objects.create(description='a description here')
         Todo.objects.create(state='active')
+        Todo.objects.create(pin='default')
 
     def test_title_content(self):
         todo = Todo.objects.get(id=1)
@@ -24,3 +25,8 @@ class TodoModelTest(TestCase):
         todo = Todo.objects.get(id=3)
         expected_object_name = f'{todo.state}'
         self.assertEquals(expected_object_name, 'active')
+
+    def test_pin_state_content(self):
+        todo = Todo.objects.get(id=4)
+        expected_object_name = f'{todo.pin}'
+        self.assertEquals(expected_object_name, 'default')

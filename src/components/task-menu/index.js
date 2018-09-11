@@ -4,6 +4,13 @@ import { connect } from 'redux-bundler-react'
 import { Menu, Icon } from 'antd'
 
 class TaskMenu extends Component {
+  static propTypes = {
+    doAddTask: PropTypes.func.isRequired,
+    doFetchTasks: PropTypes.func.isRequired,
+    doFetchActiveTasks: PropTypes.func.isRequired,
+    doFetchArchivedTasks: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props)
 
@@ -68,13 +75,6 @@ class TaskMenu extends Component {
       </>
     )
   }
-}
-
-TaskMenu.propTypes = {
-  doAddTask: PropTypes.func.isRequired,
-  doFetchTasks: PropTypes.func.isRequired,
-  doFetchActiveTasks: PropTypes.func.isRequired,
-  doFetchArchivedTasks: PropTypes.func.isRequired,
 }
 
 export default connect(

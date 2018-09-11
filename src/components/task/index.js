@@ -2,6 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from 'antd'
 
+Task.propTypes = {
+  task: PropTypes.object.isRequired,
+  doArchiveTask: PropTypes.func.isRequired,
+  doPinTask: PropTypes.func.isRequired,
+}
+
 function Task({
   task: { id, title, description, state },
   doArchiveTask,
@@ -35,12 +41,6 @@ function Task({
       </div>
     </div>
   )
-}
-
-Task.propTypes = {
-  task: PropTypes.object.isRequired,
-  doArchiveTask: PropTypes.func.isRequired,
-  doPinTask: PropTypes.func.isRequired,
 }
 
 export default Task

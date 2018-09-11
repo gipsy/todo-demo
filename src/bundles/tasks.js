@@ -179,7 +179,7 @@ export default {
 
   doArchiveTask: (id) => ({ dispatch, apiUpdate }) => {
     dispatch({ type: 'ARCHIVE_TASK_START' })
-    apiPut('/tasks', id, { state: 'archived' })
+    apiUpdate('/tasks', id, { state: 'archived' })
       .then((res) => {
         dispatch({ type: 'ARCHIVE_TASK_SUCCESS', res })
       })
@@ -190,7 +190,7 @@ export default {
 
   doPinTask: (id) => ({ dispatch, apiUpdate }) => {
     dispatch({ type: 'PIN_TASK_START' })
-    apiPut('/tasks', id, { state: 'pinned' })
+    apiUpdate('/tasks', id, { state: 'pinned' })
       .then((res) => {
         dispatch({ type: 'PIN_TASK_SUCCESS', res })
       })
@@ -201,7 +201,7 @@ export default {
 
   doAddTask: (data) => ({ dispatch, apiCreate }) => {
     dispatch({ type: 'ADD_TASK_START' })
-    apiCreate('/tasks/', data)
+    apiCreate('/tasks', data)
       .then((res) => {
         dispatch({ type: 'ADD_TASK_SUCCESS', res })
       })
@@ -261,8 +261,6 @@ export default {
   }),
 
   selectTasksActive: createSelector('selectTasks', (tasks) => {
-    console.log('inside selectTasksActive')
-    console.log(tasks)
     if (!tasks) {
       return null
     }

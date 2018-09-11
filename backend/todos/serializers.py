@@ -9,5 +9,6 @@ class TodoSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'state',
+            'pin',
         )
         model = Todo
