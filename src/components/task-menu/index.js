@@ -1,85 +1,33 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import { connect } from 'redux-bundler-react'
 import { Menu, Icon } from 'antd'
 
-class TaskMenu extends Component {
-  static propTypes = {
-    doAddTask: PropTypes.func.isRequired,
-    doFetchTasks: PropTypes.func.isRequired,
-    doFetchActiveTasks: PropTypes.func.isRequired,
-    doFetchArchivedTasks: PropTypes.func.isRequired,
-  }
+const TaskMenu = ({ doUpdateMenu, doFetchTasksByKey, menuItem }) => (
+  <Menu
+    selectedKeys={[menuItem]}
+    mode="horizontal"
+    onClick={(e) => doUpdateMenu(e.key)}
+    onSelect={(e) => doFetchTasksByKey(e.key)}>
+    <Menu.Item key="todo">
+      <Icon type="tags" />
+      Todo
+    </Menu.Item>
 
-  constructor(props) {
-    super(props)
+    <Menu.Item key="done">
+      <Icon type="check" />
+      Done
+    </Menu.Item>
 
-    this.state = {
-      currentMenu: 'todo',
-    }
-  }
-
-  handleSelectMenu = (e) => {
-    switch (e.key) {
-      case 'todo':
-        return this.setState({ currentMenu: e.key })
-      case 'done':
-        return this.setState({ currentMenu: e.key })
-      case 'add':
-        return this.setState({ currentMenu: e.key })
-    }
-  }
-
-  handleUpdateTaskList = (e) => {
-    switch (e.key) {
-      case 'todo':
-        return this.props.doFetchActiveTasks()
-      case 'done':
-        return this.props.doFetchArchivedTasks()
-      case 'add':
-        this.props.doAddTask({
-          title: 'test',
-          description: 'test',
-          state: 'active',
-        })
-        return this.props.doFetchTasks()
-    }
-  }
-
-  render() {
-    const { currentMenu } = this.state
-
-    return (
-      <>
-        <Menu
-          selectedKeys={[currentMenu]}
-          mode="horizontal"
-          onClick={(e) => this.handleSelectMenu(e)}
-          onSelect={(e) => this.handleUpdateTaskList(e)}>
-          <Menu.Item key="todo">
-            <Icon type="tags" />
-            Todo
-          </Menu.Item>
-
-          <Menu.Item key="done">
-            <Icon type="check" />
-            Done
-          </Menu.Item>
-
-          <Menu.Item key="add" onClick={() => 1}>
-            <Icon type="plus-circle-o" />
-            Add
-          </Menu.Item>
-        </Menu>
-      </>
-    )
-  }
-}
+    <Menu.Item key="add" onClick={() => 1}>
+      <Icon type="plus-circle-o" />
+      Add
+    </Menu.Item>
+  </Menu>
+)
 
 export default connect(
-  'doAddTask',
-  'doFetchTasks',
-  'doFetchActiveTasks',
-  'doFetchArchivedTasks',
+  'doFetchTasksByKey',
+  'doUpdateMenu',
+  'selectMenuItem',
   TaskMenu,
 )
