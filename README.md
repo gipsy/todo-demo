@@ -19,7 +19,8 @@ Deploy easily with [now](https://now.sh) by running `now` or use another service
 #### To run Django CRUD api server in `backend/` folder
 `python manage.py runserver`
 
-credentials for [http://127.0.0.1:8000/](http://127.0.0.1:8000/): admin/admin
+credentials to log in django admin [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin): 
+admin/admin
 
 ## About the author
 
