@@ -55,8 +55,7 @@ class TaskMenu extends Component {
           selectedKeys={[currentMenu]}
           mode="horizontal"
           onClick={(e) => this.handleSelectMenu(e)}
-          onSelect={(e) => this.handleUpdateTaskList(e)}
-        >
+          onSelect={(e) => this.handleUpdateTaskList(e)}>
           <Menu.Item key="todo">
             <Icon type="tags" />
             Todo
