@@ -27,7 +27,6 @@ credentials for [http://127.0.0.1:8000/](http://127.0.0.1:8000/): admin/admin
 
 ###### To Do
 
-* accomplish Create task view and api to send data to backend
 * accomplish pin/archive task functionality
 * accomplish Delete task functionality
 * configure styled-components theme for <ThemeProvider> to play nicely with antd
@@ -35,4 +34,4 @@ credentials for [http://127.0.0.1:8000/](http://127.0.0.1:8000/): admin/admin
 * cover api/components with tests and configure loki for visual regression testing
 * add stories for components to reflect it's functionality in storybook styleguide
 
-Last updated: 09/10/2018
+Last updated: 10/10/2018
