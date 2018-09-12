@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'redux-bundler-react'
+import styled from 'styled-components'
 import { Form, Icon, Input, TextArea, Button } from 'antd'
 
 const TaskForm = ({ doAddTask, form }) => {
@@ -47,5 +48,7 @@ const TaskForm = ({ doAddTask, form }) => {
 
 export default connect(
   'doAddTask',
-  Form.create()(TaskForm),
+  Form.create()(styled(TaskForm)`
+    background-color: grey;
+  `)
 )

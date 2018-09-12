@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redux-bundler-react'
+import styled from 'styled-components'
 import Task from '@components/task'
 
 class TaskList extends Component {
@@ -62,5 +63,7 @@ export default connect(
   'doFetchTasks',
   'selectTasks',
   'selectTasksLoading',
-  TaskList,
+  styled(TaskList)`
+    display: block;
+  `
 )

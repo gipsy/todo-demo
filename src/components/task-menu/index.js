@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'redux-bundler-react'
+import styled from 'styled-components'
 import { Menu, Icon } from 'antd'
 
 const TaskMenu = ({ doUpdateMenu, doFetchTasksByKey, menuItem }) => (
@@ -29,5 +30,7 @@ export default connect(
   'doFetchTasksByKey',
   'doUpdateMenu',
   'selectMenuItem',
-  TaskMenu,
+  styled(TaskMenu)`
+    display: block;
+  `
 )

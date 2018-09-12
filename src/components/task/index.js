@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Icon } from 'antd'
 
 const Task = ({
@@ -34,4 +35,11 @@ const Task = ({
   </div>
 )
 
-export default Task
+export default styled(Task)`
+  display: flex;
+  flex-wrap: wrap;
+  height: 3rem;
+  width: 100%;
+  background: transparent;
+  transition: all ease-out 150ms;
+`
