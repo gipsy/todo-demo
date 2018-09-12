@@ -1,7 +1,7 @@
 import * as colors from './color/colors'
 import colorPalette from './color/color-palette'
-import { add } from '../style/mixins/font'
-import { fade } from '../style/mixins/color'
+import { add } from '@components/style/mixins/font'
+import { fade } from '@components/style/mixins/color'
 
 export default (custom) => {
   const theme = {

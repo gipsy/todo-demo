@@ -18,34 +18,30 @@ const TaskForm = ({ doAddTask, form }) => {
   }
 
   return (
-    <>
-      <Form layout="inline" onSubmit={(e) => handleSubmit(e)}>
-        <Item>
-          {getFieldDecorator('title', {
-            rules: [
-              { required: true, message: 'Please input title for task!' },
-            ],
-          })(<Input placeholder="type task title" />)}
-        </Item>
+    <Form layout="inline" onSubmit={(e) => handleSubmit(e)}>
+      <Item>
+        {getFieldDecorator('title', {
+          rules: [{ required: true, message: 'Please input title for task!' }],
+        })(<Input placeholder="type task title" />)}
+      </Item>
 
-        <Item>
-          {getFieldDecorator('description', {
-            rules: [
-              { required: true, message: 'Please input description for task!' },
-            ],
-          })(<TextArea rows={4} placeholder="task details" />)}
-        </Item>
-        <Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={false}
-            onClick={(event) => event.stopPropagation()}>
-            Submit
-          </Button>
-        </Item>
-      </Form>
-    </>
+      <Item>
+        {getFieldDecorator('description', {
+          rules: [
+            { required: true, message: 'Please input description for task!' },
+          ],
+        })(<TextArea rows={4} placeholder="task details" />)}
+      </Item>
+      <Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={false}
+          onClick={(event) => event.stopPropagation()}>
+          Submit
+        </Button>
+      </Item>
+    </Form>
   )
 }
 

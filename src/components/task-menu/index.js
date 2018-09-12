@@ -7,8 +7,7 @@ const TaskMenu = ({ doUpdateMenu, doFetchTasksByKey, menuItem }) => (
     selectedKeys={[menuItem]}
     mode="horizontal"
     onClick={(e) => doUpdateMenu(e.key)}
-    onSelect={(e) => e.key === 'add' || doFetchTasksByKey(e.key)}
-  >
+    onSelect={(e) => e.key === 'add' || doFetchTasksByKey(e.key)}>
     <Menu.Item key="todo">
       <Icon type="tags" />
       Todo
