@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Icon } from 'antd'
 
@@ -6,8 +7,9 @@ const Task = ({
   task: { id, title, description, state },
   doArchiveTask,
   doPinTask,
+  className,
 }) => (
-  <div className={`list-item ${state}`}>
+  <div className={`list-item ${state} ${className}`}>
     <label className="checkbox">
       <input
         type="checkbox"
@@ -34,6 +36,18 @@ const Task = ({
     </div>
   </div>
 )
+
+Task.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+  }),
+  doArchiveTask: PropTypes.func,
+  doPinTask: PropTypes.func,
+  className: PropTypes.string,
+}
 
 export default styled(Task)`
   display: flex;

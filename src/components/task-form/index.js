@@ -1,9 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'redux-bundler-react'
 import styled from 'styled-components'
 import { Form, Icon, Input, TextArea, Button } from 'antd'
 
-const TaskForm = ({ doAddTask, form }) => {
+const TaskForm = ({ 
+  form, 
+  doAddTask, 
+  className 
+}) => {
   const { Item } = Form
   const { TextArea } = Input
 
@@ -19,7 +24,11 @@ const TaskForm = ({ doAddTask, form }) => {
   }
 
   return (
-    <Form layout="inline" onSubmit={(e) => handleSubmit(e)}>
+    <Form 
+      layout="inline" 
+      onSubmit={(e) => handleSubmit(e)}
+      className={className}
+    >
       <Item>
         {getFieldDecorator('title', {
           rules: [{ required: true, message: 'Please input title for task!' }],
@@ -44,6 +53,12 @@ const TaskForm = ({ doAddTask, form }) => {
       </Item>
     </Form>
   )
+}
+
+TaskForm.propTypes = {
+  form: PropTypes.object,
+  doAddTask: PropTypes.func,
+  className: PropTypes.string,
 }
 
 export default connect(

@@ -1,14 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'redux-bundler-react'
 import styled from 'styled-components'
 import { Menu, Icon } from 'antd'
 
-const TaskMenu = ({ doUpdateMenu, doFetchTasksByKey, menuItem }) => (
+const TaskMenu = ({ 
+  menuItem, 
+  doUpdateMenu, 
+  doFetchTasksByKey, 
+  className,
+}) => (
   <Menu
     selectedKeys={[menuItem]}
     mode="horizontal"
     onClick={(e) => doUpdateMenu(e.key)}
-    onSelect={(e) => e.key === 'add' || doFetchTasksByKey(e.key)}>
+    onSelect={(e) => e.key === 'add' || doFetchTasksByKey(e.key)}
+    className={className}
+  >
     <Menu.Item key="todo">
       <Icon type="tags" />
       Todo
@@ -26,10 +34,17 @@ const TaskMenu = ({ doUpdateMenu, doFetchTasksByKey, menuItem }) => (
   </Menu>
 )
 
+TaskMenu.propTypes = {
+  menuItem: PropTypes.string,
+  doUpdateMenu: PropTypes.func,
+  doFetchTaskByKey: PropTypes.func,
+  className: PropTypes.string,
+}
+
 export default connect(
+  'selectMenuItem',
   'doFetchTasksByKey',
   'doUpdateMenu',
-  'selectMenuItem',
   styled(TaskMenu)`
     display: block;
   `

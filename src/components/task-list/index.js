@@ -6,11 +6,12 @@ import Task from '@components/task'
 
 class TaskList extends Component {
   static propTypes = {
+    tasks: PropTypes.array,
+    tasksLoading: PropTypes.bool,
     doPinTask: PropTypes.func.isRequired,
     doArchiveTask: PropTypes.func.isRequired,
     doFetchTasks: PropTypes.func.isRequired,
-    tasks: PropTypes.array,
-    tasksLoading: PropTypes.bool,
+    className: PropTypes.string
   }
 
   constructor(props) {
@@ -22,7 +23,7 @@ class TaskList extends Component {
   }
 
   render() {
-    const { tasks, tasksLoading, doPinTask, doArchiveTask } = this.props
+    const { tasks, tasksLoading, doPinTask, doArchiveTask, className } = this.props
 
     const events = {
       doPinTask,
@@ -32,7 +33,7 @@ class TaskList extends Component {
     if (tasksLoading) {
       return (
         <>
-          <div className="list-items">loading</div>
+          <div className={`list-items ${className}`}>loading</div>
         </>
       )
     }
@@ -40,14 +41,14 @@ class TaskList extends Component {
     if (tasks.length === 0) {
       return (
         <>
-          <div className="list-items">empty</div>
+          <div className={`list-items ${className}`}>empty</div>
         </>
       )
     }
 
     return (
       <>
-        <div className="list-items">
+        <div className={`list-items ${className}`}>
           {tasks.map((task) => (
             <Task key={task.id} task={task} {...events} />
           ))}
