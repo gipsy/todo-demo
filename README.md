@@ -28,7 +28,7 @@ admin/admin
 
 ###### To Do
 
-* figure out why DELETE method not allowed on Django
+* update store on task DELETE method
 * configure styled-components theme for <ThemeProvider> to play nicely with antd
 * style components
 * cover api/components with tests and configure loki for visual regression testing
