@@ -101,7 +101,16 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: payload.filter((task) => task.pin === 'pinned'),
+          data: state.data.map((task) => {
+            if (task.id !== payload.id) {
+              return task
+            }
+
+            return {
+              ...task,
+              ...payload,
+            }
+          }),
         })
       }
 
@@ -119,13 +128,12 @@ export default {
       }
 
       if (type === 'ARCHIVE_TASK_SUCCESS') {
-        console.log('ARCHIVE_TASK_SUCCESS')
-        console.log(res)
         return Object.assign({}, state, {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: payload.filter((task) => task.state === 'archived'),
+          // data: payload.filter((task) => task.state === 'archived'),
+          data: payload,
         })
       }
 
@@ -161,54 +169,32 @@ export default {
     })
   },
 
-  // doFetchActiveTasks: () => ({ dispatch, apiRead }) => {
-  //   dispatch({ type: 'FETCH_ACTIVE_TASKS_START' })
-  //   apiRead('/tasks')
-  //     .then((payload) => {
-  //       dispatch({
-  //         type: 'FETCH_ACTIVE_TASKS_SUCCESS',
-  //         payload,
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       dispatch({ type: 'FETCH_ACTIVE_TASKS_ERROR' })
-  //     })
-  // },
-  //
-  // doFetchArchivedTasks: () => ({ dispatch, apiRead }) => {
-  //   dispatch({ type: 'FETCH_ARCHIVED_TASKS_START' })
-  //   apiRead('/tasks')
-  //     .then((payload) => {
-  //       dispatch({
-  //         type: 'FETCH_ARCHIVED_TASKS_SUCCESS',
-  //         payload,
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       dispatch({ type: 'FETCH_ARCHIVED_TASKS_ERROR' })
-  //     })
-  // },
-
   doArchiveTask: (id) => ({ dispatch, apiUpdate }) => {
     dispatch({ type: 'ARCHIVE_TASK_START' })
-    console.log('doArchiveTask')
-    console.log('id: ' + id)
     apiUpdate('/tasks', id, { state: 'archived' })
-      .then((res) => {
-        dispatch({ type: 'ARCHIVE_TASK_SUCCESS', res })
+      .then((payload) => {
+        dispatch({
+          type: 'ARCHIVE_TASK_SUCCESS',
+          payload,
+        })
       })
       .catch((err) => {
         dispatch({ type: 'ARCHIVE_TASK_ERROR', err })
       })
   },
 
-  doPinTask: (id) => ({ dispatch, apiUpdate }) => {
+  doPinTask: (id) => ({ dispatch, apiUpdate, getState }) => {
     dispatch({ type: 'PIN_TASK_START' })
-    console.log('doPinTask')
-    console.log('id: ' + id)
-    apiUpdate('/tasks', id, { pin: 'pinned' })
-      .then((res) => {
-        dispatch({ type: 'PIN_TASK_SUCCESS', res })
+    const pin =
+      getState().tasks.data.find((task) => task.id === id).pin === 'pinned'
+        ? { pin: 'default' }
+        : { pin: 'pinned' }
+    apiUpdate('/tasks', id, pin)
+      .then((payload) => {
+        dispatch({
+          type: 'PIN_TASK_SUCCESS',
+          payload,
+        })
       })
       .catch((err) => {
         dispatch({ type: 'PIN_TASK_ERROR', err })
@@ -218,8 +204,11 @@ export default {
   doAddTask: (data) => ({ dispatch, apiCreate }) => {
     dispatch({ type: 'ADD_TASK_START' })
     apiCreate('/tasks', data)
-      .then((res) => {
-        dispatch({ type: 'ADD_TASK_SUCCESS', res })
+      .then((payload) => {
+        dispatch({
+          type: 'ADD_TASK_SUCCESS',
+          payload,
+        })
       })
       .catch((err) => {
         dispatch({ type: 'ADD_TASK_ERROR', err })
@@ -229,11 +218,14 @@ export default {
   doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
     dispatch({ type: 'DELETE_TASK_START' })
     apiDelete('/tasks/', id)
-      .then((res) => {
-        dispatch({ type: 'DELETE_TASK_SUCCESS', res })
+      .then((payload) => {
+        dispatch({
+          type: 'DELETE_TASK_SUCCESS',
+          payload,
+        })
       })
       .catch((err) => {
-        dispatch({ type: 'DELETE_TASK_ERROR' })
+        dispatch({ type: 'DELETE_TASK_ERROR', err })
       })
   },
 

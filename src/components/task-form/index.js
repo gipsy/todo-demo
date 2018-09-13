@@ -4,11 +4,7 @@ import { connect } from 'redux-bundler-react'
 import styled from 'styled-components'
 import { Form, Icon, Input, TextArea, Button } from 'antd'
 
-const TaskForm = ({ 
-  form, 
-  doAddTask, 
-  className 
-}) => {
+const TaskForm = ({ form, doAddTask, className }) => {
   const { Item } = Form
   const { TextArea } = Input
 
@@ -24,11 +20,10 @@ const TaskForm = ({
   }
 
   return (
-    <Form 
-      layout="inline" 
+    <Form
+      layout="inline"
       onSubmit={(e) => handleSubmit(e)}
-      className={className}
-    >
+      className={className}>
       <Item>
         {getFieldDecorator('title', {
           rules: [{ required: true, message: 'Please input title for task!' }],
@@ -65,5 +60,5 @@ export default connect(
   'doAddTask',
   Form.create()(styled(TaskForm)`
     background-color: grey;
-  `)
+  `),
 )

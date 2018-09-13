@@ -11,7 +11,7 @@ class TaskList extends Component {
     doPinTask: PropTypes.func.isRequired,
     doArchiveTask: PropTypes.func.isRequired,
     doFetchTasks: PropTypes.func.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
   }
 
   constructor(props) {
@@ -23,7 +23,13 @@ class TaskList extends Component {
   }
 
   render() {
-    const { tasks, tasksLoading, doPinTask, doArchiveTask, className } = this.props
+    const {
+      tasks,
+      tasksLoading,
+      doPinTask,
+      doArchiveTask,
+      className,
+    } = this.props
 
     const events = {
       doPinTask,
@@ -66,5 +72,5 @@ export default connect(
   'selectTasksLoading',
   styled(TaskList)`
     display: block;
-  `
+  `,
 )

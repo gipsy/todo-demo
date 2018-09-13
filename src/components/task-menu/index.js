@@ -4,19 +4,13 @@ import { connect } from 'redux-bundler-react'
 import styled from 'styled-components'
 import { Menu, Icon } from 'antd'
 
-const TaskMenu = ({ 
-  menuItem, 
-  doUpdateMenu, 
-  doFetchTasksByKey, 
-  className,
-}) => (
+const TaskMenu = ({ menuItem, doUpdateMenu, doFetchTasksByKey, className }) => (
   <Menu
     selectedKeys={[menuItem]}
     mode="horizontal"
     onClick={(e) => doUpdateMenu(e.key)}
     onSelect={(e) => e.key === 'add' || doFetchTasksByKey(e.key)}
-    className={className}
-  >
+    className={className}>
     <Menu.Item key="todo">
       <Icon type="tags" />
       Todo
@@ -47,5 +41,5 @@ export default connect(
   'doUpdateMenu',
   styled(TaskMenu)`
     display: block;
-  `
+  `,
 )

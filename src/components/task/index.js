@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Icon } from 'antd'
 
 const Task = ({
-  task: { id, title, description, state },
+  task: { id, title, description, pin, state },
   doArchiveTask,
   doPinTask,
   className,
@@ -30,7 +30,10 @@ const Task = ({
     <div className="actions" onClick={(event) => event.stopPropagation()}>
       {state !== 'archived' && (
         <a onClick={() => doPinTask(id)}>
-          <Icon type="star" theme="filled" />
+          <Icon
+            type="star"
+            theme={`${pin === 'pinned' ? 'filled' : 'outlined'}`}
+          />
         </a>
       )}
     </div>
