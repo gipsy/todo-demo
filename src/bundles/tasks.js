@@ -260,7 +260,7 @@ export default {
 
   doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
     dispatch({ type: 'DELETE_TASK_START' })
-    apiDelete('/tasks/', id)
+    apiDelete('/tasks', id)
       .then((payload) => {
         dispatch({
           type: 'DELETE_TASK_SUCCESS',

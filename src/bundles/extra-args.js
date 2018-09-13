@@ -47,7 +47,7 @@ export default {
           }),
 
       apiDelete: (urlPath, id) =>
-        fetch(`http://127.0.0.1:8000/api${urlPath}`, {
+        fetch(`http://127.0.0.1:8000/api${urlPath}/${id}/`, {
           credentials: 'same-origin',
           method: 'DELETE',
         })
