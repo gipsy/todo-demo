@@ -28,11 +28,10 @@ admin/admin
 
 ###### To Do
 
-* accomplish pin/archive task functionality
-* accomplish Delete task functionality
+* figure out why DELETE method not allowed on Django
 * configure styled-components theme for <ThemeProvider> to play nicely with antd
 * style components
 * cover api/components with tests and configure loki for visual regression testing
 * add stories for components to reflect it's functionality in storybook styleguide
 
-Last updated: 10/10/2018
+Last updated: 12/10/2018

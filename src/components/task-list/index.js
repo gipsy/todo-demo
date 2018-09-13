@@ -10,6 +10,7 @@ class TaskList extends Component {
     tasksLoading: PropTypes.bool,
     doPinTask: PropTypes.func.isRequired,
     doArchiveTask: PropTypes.func.isRequired,
+    doDeleteTask: PropTypes.func.isRequired,
     doFetchTasks: PropTypes.func.isRequired,
     className: PropTypes.string,
   }
@@ -28,12 +29,14 @@ class TaskList extends Component {
       tasksLoading,
       doPinTask,
       doArchiveTask,
+      doDeleteTask,
       className,
     } = this.props
 
     const events = {
       doPinTask,
       doArchiveTask,
+      doDeleteTask,
     }
 
     if (tasksLoading) {
@@ -67,10 +70,13 @@ class TaskList extends Component {
 export default connect(
   'doPinTask',
   'doArchiveTask',
+  'doDeleteTask',
   'doFetchTasks',
   'selectTasks',
   'selectTasksLoading',
   styled(TaskList)`
     display: block;
+    // background-color: ${primaryColor};
+    background-color: #00A854;
   `,
 )

@@ -132,8 +132,47 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          // data: payload.filter((task) => task.state === 'archived'),
-          data: payload,
+          data: state.data.map((task) => {
+            if (task.id !== payload.id) {
+              return task
+            }
+
+            return {
+              ...task,
+              ...payload,
+            }
+          }),
+        })
+      }
+
+      if (type === 'DELETE_TASK_START') {
+        return Object.assign({}, state, {
+          loading: true,
+        })
+      }
+
+      if (type === 'DELETE_TASK_ERROR') {
+        return Object.assign({}, state, {
+          lastError: Date.now(),
+          loading: false,
+        })
+      }
+
+      if (type === 'DELETE_TASK_SUCCESS') {
+        return Object.assign({}, state, {
+          lastFetch: Date.now(),
+          loading: false,
+          lastError: null,
+          data: state.data.map((task) => {
+            if (task.id !== payload.id) {
+              return task
+            }
+
+            return {
+              ...task,
+              ...payload,
+            }
+          }),
         })
       }
 
@@ -169,9 +208,13 @@ export default {
     })
   },
 
-  doArchiveTask: (id) => ({ dispatch, apiUpdate }) => {
+  doArchiveTask: (id) => ({ dispatch, apiUpdate, getState }) => {
     dispatch({ type: 'ARCHIVE_TASK_START' })
-    apiUpdate('/tasks', id, { state: 'archived' })
+    const archive =
+      getState().tasks.data.find((task) => task.id === id).state === 'archived'
+        ? { state: 'active' }
+        : { state: 'archived' }
+    apiUpdate('/tasks', id, archive)
       .then((payload) => {
         dispatch({
           type: 'ARCHIVE_TASK_SUCCESS',
