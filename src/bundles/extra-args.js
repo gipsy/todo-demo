@@ -51,7 +51,7 @@ export default {
           credentials: 'same-origin',
           method: 'DELETE',
         })
-          .then((res) => res.json())
+          .then((res) => res.status === 204 && id)
           .catch((err) => {
             throw err
           }),

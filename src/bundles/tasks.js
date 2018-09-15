@@ -163,16 +163,7 @@ export default {
           lastFetch: Date.now(),
           loading: false,
           lastError: null,
-          data: state.data.map((task) => {
-            if (task.id !== payload.id) {
-              return task
-            }
-
-            return {
-              ...task,
-              ...payload,
-            }
-          }),
+          data: state.data.filter((task) => task.id !== payload)
         })
       }
 
@@ -261,11 +252,15 @@ export default {
   doDeleteTask: (id) => ({ dispatch, apiDelete }) => {
     dispatch({ type: 'DELETE_TASK_START' })
     apiDelete('/tasks', id)
-      .then((payload) => {
-        dispatch({
-          type: 'DELETE_TASK_SUCCESS',
-          payload,
-        })
+      .then((id) => {
+        if (id) {
+          dispatch({ 
+            type: 'DELETE_TASK_SUCCESS',
+            payload: id
+          })
+        } else {
+          dispatch({ type: 'DELETE_TASK_ERROR' })
+        }
       })
       .catch((err) => {
         dispatch({ type: 'DELETE_TASK_ERROR', err })
