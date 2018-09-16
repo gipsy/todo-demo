@@ -2,25 +2,26 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
-import Task from './Task'
+import Task from '@components/task'
 
 export const task = {
-  id: '1',
+  id: 1,
   title: 'Test Task',
-  state: 'TASK_INBOX',
-  updatedAt: new Date(2018, 0, 1, 9, 0),
+  description: 'Test Description',
+  state: 'active',
+  pin: 'default',
 }
 
 export const actions = {
-  onPinTask: action('onPinTask'),
-  onArchiveTask: action('onArchiveTask'),
+  doPinTask: action('doPinTask'),
+  doArchiveTask: action('doArchiveTask'),
 }
 
 storiesOf('Task', module)
   .add('default', () => <Task task={task} {...actions} />)
   .add('pinned', () => (
-    <Task task={{ ...task, state: 'TASK_PINNED' }} {...actions} />
+    <Task task={{ ...task, pin: 'pinned' }} {...actions} />
   ))
   .add('archived', () => (
-    <Task task={{ ...task, state: 'TASK_ARCHIVED' }} {...actions} />
+    <Task task={{ ...task, state: 'archived' }} {...actions} />
   ))

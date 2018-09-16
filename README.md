@@ -28,10 +28,9 @@ admin/admin
 
 ###### To Do
 
-* update store on task DELETE method
 * configure styled-components theme for <ThemeProvider> to play nicely with antd
 * style components
 * cover api/components with tests and configure loki for visual regression testing
 * add stories for components to reflect it's functionality in storybook styleguide
 
-Last updated: 12/10/2018
+Last updated: 14/10/2018
